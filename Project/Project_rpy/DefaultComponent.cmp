@@ -1,0 +1,158 @@
+I-Logix-RPY-Archive version 8.10.0 Java 6930133
+{ IComponent 
+	- _id = GUID 28cbd4e3-51f5-4cfb-9982-56ce31039049;
+	- _myState = 139264;
+	- _name = "DefaultComponent";
+	- _modifiedTimeWeak = 5.30.2015::22:0:49;
+	- m_buildType = Executable;
+	- m_libraries = "";
+	- m_additionalSources = "";
+	- m_standardHeaders = "";
+	- m_includePath = "";
+	- m_initializationCode = "";
+	- m_folder = { IFolder 
+		- _id = GUID 8d08325b-4c9b-46b3-943c-ae9d7ec4f11e;
+		- _myState = 73728;
+		- _name = "Files";
+		- _modifiedTimeWeak = 5.30.2015::17:59:48;
+		- m_path = "";
+		- Elements = { IRPYRawContainer 
+			- size = 0;
+		}
+		- Files = { IRPYRawContainer 
+			- size = 0;
+		}
+	}
+	- m_configActive = { ICodeGenConfigInfoHandle 
+		- _m2Class = "ICodeGenConfigInfo";
+		- _id = GUID 444b87e5-3929-48c5-8aa3-eb9d218ef7c3;
+	}
+	- Configs = { IRPYRawContainer 
+		- size = 1;
+		- value = 
+		{ ICodeGenConfigInfo 
+			- _id = GUID 444b87e5-3929-48c5-8aa3-eb9d218ef7c3;
+			- _myState = 8192;
+			- _name = "PanelAnimation";
+			- _modifiedTimeWeak = 5.30.2015::22:1:1;
+			- HyperLinks = { IRPYRawContainer 
+				- size = 2;
+				- value = 
+				{ IMHyperLink 
+					- _id = GUID 17ec2640-d170-45f9-a9ab-896dd6239e76;
+					- _modifiedTimeWeak = 1.2.1990::0:0:0;
+					- _dependsOn = { INObjectHandle 
+						- _m2Class = "";
+					}
+					- _linkDispName = "Edit Makefile";
+					- _linkType = "FREE";
+					- _linkTarget = "D:/Projects/SCR/mp3-2/Project/DefaultComponent/DefaultConfig/DefaultComponent.bat";
+					- isConfigurationFileHyperLink = 1;
+				}
+				{ IMHyperLink 
+					- _id = GUID 04096a36-205e-4246-b19f-79b65d1a0fb9;
+					- _modifiedTimeWeak = 1.2.1990::0:0:0;
+					- _dependsOn = { INObjectHandle 
+						- _m2Class = "";
+					}
+					- _linkDispName = "Edit Main File";
+					- _linkType = "FREE";
+					- _linkTarget = "D:/Projects/SCR/mp3-2/Project/DefaultComponent/DefaultConfig/MainDefaultComponent";
+					- isConfigurationFileHyperLink = 1;
+				}
+			}
+			- _scopeType = Explicit;
+			- _libraries = "";
+			- _additionalSources = "";
+			- _standardHeaders = "";
+			- _includePath = "";
+			- _targetMain = "";
+			- _instrumentation = Animation;
+			- _timeModel = RealTime;
+			- m_generateActors = 1;
+			- _statechartImplementation = Flat;
+			- _initializationCode = "";
+			- _checksList = 0 ;
+			- ScopeElements = { IRPYRawContainer 
+				- size = 0;
+			}
+			- InitialInstances = { IRPYRawContainer 
+				- size = 3;
+				- value = 
+				{ IHandle 
+					- _m2Class = "IClass";
+					- _filename = "Default.sbs";
+					- _subsystem = "Default";
+					- _class = "";
+					- _name = "Player";
+					- _id = GUID 4fe239e8-a1a5-4585-af7a-366947b738dd;
+				}
+				{ IHandle 
+					- _m2Class = "IClass";
+					- _filename = "Default.sbs";
+					- _subsystem = "Default";
+					- _class = "";
+					- _name = "SongNavigationController";
+					- _id = GUID 49be2696-57e6-408d-bacf-37dff6e7394e;
+				}
+				{ IHandle 
+					- _m2Class = "IClass";
+					- _filename = "Default.sbs";
+					- _subsystem = "Default";
+					- _class = "";
+					- _name = "VolumeController";
+					- _id = GUID 2f92def0-53c0-4650-9cbd-cf55218301a8;
+				}
+			}
+			- _root = { IFolder 
+				- _id = GUID d8fdc0ac-0553-4ae3-82b6-641b1d50ff61;
+				- _myState = 8192;
+				- _name = "PanelAnimation";
+				- _modifiedTimeWeak = 5.30.2015::22:1:1;
+				- m_path = "";
+				- Elements = { IRPYRawContainer 
+					- size = 0;
+				}
+				- Files = { IRPYRawContainer 
+					- size = 0;
+				}
+			}
+			- weakCGTime = 5.30.2015::22:1:1;
+			- strongCGTime = 5.30.2015::22:1:1;
+			- AnimScopeElements = { IRPYRawContainer 
+				- size = 0;
+			}
+			- m_allInAnimScope = 1;
+			- m_generateUsecases = 0;
+		}
+	}
+	- HandlesInMe = { IRPYRawContainer 
+		- size = 2;
+		- value = 
+		{ IHandle 
+			- _m2Class = "ISubsystem";
+			- _filename = "Default.sbs";
+			- _subsystem = "";
+			- _class = "";
+			- _name = "Default";
+			- _id = GUID 84e07064-e104-4b22-ad74-cc3e7975d81f;
+		}
+		{ IHandle 
+			- _m2Class = "IProfile";
+			- _filename = "$OMROOT\\Profiles\\JavaDoc\\\\JavaDocProfile.sbs";
+			- _subsystem = "";
+			- _class = "";
+			- _name = "JavaDocProfile";
+			- _id = GUID 19700e28-456f-4c97-a19c-b95dcb3e9dff;
+		}
+	}
+	- VariationPoints = { IRPYRawContainer 
+		- size = 0;
+	}
+	- SelectedVariants = { IRPYRawContainer 
+		- size = 0;
+	}
+	- weakCGTime = 5.30.2015::22:0:49;
+	- strongCGTime = 1.2.1990::0:0:0;
+}
+
