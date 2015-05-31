@@ -7,10 +7,10 @@ I-Logix-RPY-Archive version 8.10.0 * 6930133
 	"DefaultComponent/DefaultConfig/Default/SongNavigationController.java" 5.30.2015::21:51:20
 	"DefaultComponent/DefaultConfig/Default/VolumeController.java" 5.30.2015::21:12:17
 	"DefaultComponent/DefaultConfig/Default/object_0.java" 5.30.2015::21:2:14
-	"DefaultComponent/PanelAnimation/Default/Default_pkgClass.java" 5.30.2015::22:36:49
-	"DefaultComponent/PanelAnimation/Default/Player.java" 5.30.2015::22:36:49
-	"DefaultComponent/PanelAnimation/Default/SongNavigationController.java" 5.31.2015::0:2:38
-	"DefaultComponent/PanelAnimation/Default/VolumeController.java" 5.30.2015::22:51:55
+	"DefaultComponent/PanelAnimation/Default/Default_pkgClass.java" 5.31.2015::0:23:37
+	"DefaultComponent/PanelAnimation/Default/Player.java" 5.31.2015::0:29:8
+	"DefaultComponent/PanelAnimation/Default/SongNavigationController.java" 5.31.2015::0:24:22
+	"DefaultComponent/PanelAnimation/Default/VolumeController.java" 5.31.2015::0:23:37
 	
 }
 - size = 5;
@@ -22,7 +22,7 @@ I-Logix-RPY-Archive version 8.10.0 * 6930133
 	- _name = "VolumeController";
 	- _id = GUID 2f92def0-53c0-4650-9cbd-cf55218301a8;
 }
-- genTime = 5.30.2015::22:51:55;
+- genTime = 5.31.2015::0:24:22;
 - hElement = { IHandle 
 	- _m2Class = "ICodeGenConfigInfo";
 	- _filename = "DefaultComponent.cmp";
@@ -31,7 +31,7 @@ I-Logix-RPY-Archive version 8.10.0 * 6930133
 	- _name = "DefaultComponent\\PanelAnimation";
 	- _id = GUID 444b87e5-3929-48c5-8aa3-eb9d218ef7c3;
 }
-- genTime = 5.31.2015::0:2:53;
+- genTime = 5.31.2015::0:29:8;
 - hElement = { IHandle 
 	- _m2Class = "IClass";
 	- _filename = "Default.sbs";
@@ -40,7 +40,7 @@ I-Logix-RPY-Archive version 8.10.0 * 6930133
 	- _name = "SongNavigationController";
 	- _id = GUID 49be2696-57e6-408d-bacf-37dff6e7394e;
 }
-- genTime = 5.31.2015::0:2:38;
+- genTime = 5.31.2015::0:24:22;
 - hElement = { IHandle 
 	- _m2Class = "ISubsystem";
 	- _filename = "Default.sbs";
@@ -49,7 +49,7 @@ I-Logix-RPY-Archive version 8.10.0 * 6930133
 	- _name = "Default";
 	- _id = GUID 84e07064-e104-4b22-ad74-cc3e7975d81f;
 }
-- genTime = 5.31.2015::0:2:53;
+- genTime = 5.31.2015::0:28:6;
 - hElement = { IHandle 
 	- _m2Class = "IClass";
 	- _filename = "Default.sbs";
@@ -58,5 +58,5 @@ I-Logix-RPY-Archive version 8.10.0 * 6930133
 	- _name = "Player";
 	- _id = GUID 4fe239e8-a1a5-4585-af7a-366947b738dd;
 }
-- genTime = 5.30.2015::22:39:2;
+- genTime = 5.31.2015::0:29:8;
 

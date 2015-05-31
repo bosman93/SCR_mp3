@@ -291,14 +291,14 @@ public class SongNavigationController implements RiJStateConcept, Animated {
                     Finish_add(animStates);
                 }
                 break;
-                case prevAction:
-                {
-                    prevAction_add(animStates);
-                }
-                break;
                 case nextAction:
                 {
                     nextAction_add(animStates);
+                }
+                break;
+                case prevAction:
+                {
+                    prevAction_add(animStates);
                 }
                 break;
                 default:
@@ -353,14 +353,14 @@ public class SongNavigationController implements RiJStateConcept, Animated {
                     res = Finish_takeEvent(id);
                 }
                 break;
-                case prevAction:
-                {
-                    res = prevAction_takeEvent(id);
-                }
-                break;
                 case nextAction:
                 {
                     res = nextAction_takeEvent(id);
+                }
+                break;
+                case prevAction:
+                {
+                    res = prevAction_takeEvent(id);
                 }
                 break;
                 default:

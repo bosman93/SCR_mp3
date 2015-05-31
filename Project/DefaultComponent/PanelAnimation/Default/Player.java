@@ -38,6 +38,8 @@ public class Player implements RiJStateConcept, Animated {
     
     public Reactive reactive;		//## ignore 
     
+    protected boolean isRandom = false;		//## attribute isRandom 
+    
     protected int minutes = 0;		//## attribute minutes 
     
     protected int seconds = 0;		//## attribute seconds 
@@ -49,18 +51,28 @@ public class Player implements RiJStateConcept, Animated {
     //#[ ignore 
     public static final int RiJNonState=0;
     public static final int Active=1;
-    public static final int Playing=2;
-    public static final int Waiting=3;
-    public static final int TimeUpdate=4;
-    public static final int sendUpdate=5;
-    public static final int Finish=6;
-    public static final int Paused=7;
+    public static final int state_24=2;
+    public static final int Regular=3;
+    public static final int Random=4;
+    public static final int state_23=5;
+    public static final int Playing=6;
+    public static final int Waiting=7;
+    public static final int TimeUpdate=8;
+    public static final int sendUpdate=9;
+    public static final int Finish=10;
+    public static final int Paused=11;
     //#]
     protected int rootState_subState;		//## ignore 
     
     protected int rootState_active;		//## ignore 
     
-    protected int Active_subState;		//## ignore 
+    protected int state_24_subState;		//## ignore 
+    
+    protected int state_24_active;		//## ignore 
+    
+    protected int state_23_subState;		//## ignore 
+    
+    protected int state_23_active;		//## ignore 
     
     protected int Playing_subState;		//## ignore 
     
@@ -129,6 +141,21 @@ public class Player implements RiJStateConcept, Animated {
             animInstance().notifyMethodExit();
         }
         
+    }
+    
+    //## auto_generated 
+    public boolean getIsRandom() {
+        return isRandom;
+    }
+    
+    //## auto_generated 
+    public void setIsRandom(boolean p_isRandom) {
+        try {
+        isRandom = p_isRandom;
+        }
+        finally {
+            animInstance().notifyUpdatedAttr();
+        }
     }
     
     //## auto_generated 
@@ -274,7 +301,19 @@ public class Player implements RiJStateConcept, Animated {
                 {
                     return true;
                 }
-            if(Active_subState == state)
+            if(state_23 == state)
+                {
+                    return isIn(Active);
+                }
+            if(state_23_subState == state)
+                {
+                    return true;
+                }
+            if(state_24 == state)
+                {
+                    return isIn(Active);
+                }
+            if(state_24_subState == state)
                 {
                     return true;
                 }
@@ -310,12 +349,118 @@ public class Player implements RiJStateConcept, Animated {
         //## statechart_method 
         public int rootState_dispatchEvent(short id) {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            switch (rootState_active) {
-                case Paused:
+            if(rootState_active == Active)
                 {
-                    res = Paused_takeEvent(id);
+                    res = Active_dispatchEvent(id);
+                }
+            return res;
+        }
+        
+        //## statechart_method 
+        public void Active_add(AnimStates animStates) {
+            animStates.add("ROOT.Active");
+            state_23_add(animStates);
+            state_24_add(animStates);
+        }
+        
+        //## statechart_method 
+        public int Active_dispatchEvent(short id) {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            if(state_23_dispatchEvent(id) >= 0)
+                {
+                    res = RiJStateReactive.TAKE_EVENT_COMPLETE;
+                    if(!isIn(Active))
+                        {
+                            return res;
+                        }
+                }
+            if(state_24_dispatchEvent(id) >= 0)
+                {
+                    res = RiJStateReactive.TAKE_EVENT_COMPLETE;
+                    if(!isIn(Active))
+                        {
+                            return res;
+                        }
+                }
+            if(res == RiJStateReactive.TAKE_EVENT_NOT_CONSUMED)
+                {
+                    res = Active_takeEvent(id);
+                }
+            return res;
+        }
+        
+        //## statechart_method 
+        public void state_24_add(AnimStates animStates) {
+            animStates.add("ROOT.Active.state_24");
+            switch (state_24_subState) {
+                case Regular:
+                {
+                    Regular_add(animStates);
                 }
                 break;
+                case Random:
+                {
+                    Random_add(animStates);
+                }
+                break;
+                default:
+                    break;
+            }
+        }
+        
+        //## statechart_method 
+        public int state_24_dispatchEvent(short id) {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            switch (state_24_active) {
+                case Regular:
+                {
+                    res = Regular_takeEvent(id);
+                }
+                break;
+                case Random:
+                {
+                    res = Random_takeEvent(id);
+                }
+                break;
+                default:
+                    break;
+            }
+            return res;
+        }
+        
+        //## statechart_method 
+        public void Regular_add(AnimStates animStates) {
+            animStates.add("ROOT.Active.state_24.Regular");
+        }
+        
+        //## statechart_method 
+        public void Random_add(AnimStates animStates) {
+            animStates.add("ROOT.Active.state_24.Random");
+        }
+        
+        //## statechart_method 
+        public void state_23_add(AnimStates animStates) {
+            animStates.add("ROOT.Active.state_23");
+            switch (state_23_subState) {
+                case Playing:
+                {
+                    Playing_add(animStates);
+                }
+                break;
+                case Paused:
+                {
+                    Paused_add(animStates);
+                }
+                break;
+                default:
+                    break;
+            }
+        }
+        
+        //## statechart_method 
+        public int state_23_dispatchEvent(short id) {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            switch (state_23_active) {
                 case Waiting:
                 {
                     res = Waiting_takeEvent(id);
@@ -336,6 +481,11 @@ public class Player implements RiJStateConcept, Animated {
                     res = sendUpdate_takeEvent(id);
                 }
                 break;
+                case Paused:
+                {
+                    res = Paused_takeEvent(id);
+                }
+                break;
                 default:
                     break;
             }
@@ -343,27 +493,8 @@ public class Player implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
-        public void Active_add(AnimStates animStates) {
-            animStates.add("ROOT.Active");
-            switch (Active_subState) {
-                case Paused:
-                {
-                    Paused_add(animStates);
-                }
-                break;
-                case Playing:
-                {
-                    Playing_add(animStates);
-                }
-                break;
-                default:
-                    break;
-            }
-        }
-        
-        //## statechart_method 
         public void Playing_add(AnimStates animStates) {
-            animStates.add("ROOT.Active.Playing");
+            animStates.add("ROOT.Active.state_23.Playing");
             switch (Playing_subState) {
                 case Waiting:
                 {
@@ -392,34 +523,37 @@ public class Player implements RiJStateConcept, Animated {
         
         //## statechart_method 
         public void Waiting_add(AnimStates animStates) {
-            animStates.add("ROOT.Active.Playing.Waiting");
+            animStates.add("ROOT.Active.state_23.Playing.Waiting");
         }
         
         //## statechart_method 
         public void TimeUpdate_add(AnimStates animStates) {
-            animStates.add("ROOT.Active.Playing.TimeUpdate");
+            animStates.add("ROOT.Active.state_23.Playing.TimeUpdate");
         }
         
         //## statechart_method 
         public void sendUpdate_add(AnimStates animStates) {
-            animStates.add("ROOT.Active.Playing.sendUpdate");
+            animStates.add("ROOT.Active.state_23.Playing.sendUpdate");
         }
         
         //## statechart_method 
         public void Finish_add(AnimStates animStates) {
-            animStates.add("ROOT.Active.Playing.Finish");
+            animStates.add("ROOT.Active.state_23.Playing.Finish");
         }
         
         //## statechart_method 
         public void Paused_add(AnimStates animStates) {
-            animStates.add("ROOT.Active.Paused");
+            animStates.add("ROOT.Active.state_23.Paused");
         }
         
         //## auto_generated 
         protected void initStatechart() {
             rootState_subState = RiJNonState;
             rootState_active = RiJNonState;
-            Active_subState = RiJNonState;
+            state_24_subState = RiJNonState;
+            state_24_active = RiJNonState;
+            state_23_subState = RiJNonState;
+            state_23_active = RiJNonState;
             Playing_subState = RiJNonState;
             Playing_lastState = RiJNonState;
         }
@@ -434,7 +568,7 @@ public class Player implements RiJStateConcept, Animated {
             
             if(res == RiJStateReactive.TAKE_EVENT_NOT_CONSUMED)
                 {
-                    res = Active_takeEvent(id);
+                    res = state_23_takeEvent(id);
                 }
             return res;
         }
@@ -447,34 +581,53 @@ public class Player implements RiJStateConcept, Animated {
         public void sendUpdate_exit() {
             popNullConfig();
             sendUpdateExit();
-            animInstance().notifyStateExited("ROOT.Active.Playing.sendUpdate");
+            animInstance().notifyStateExited("ROOT.Active.state_23.Playing.sendUpdate");
+        }
+        
+        //## statechart_method 
+        public int Random_takeEvent(short id) {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            if(event.isTypeOf(evRandom.evRandom_Default_id))
+                {
+                    res = RandomTakeevRandom();
+                }
+            
+            if(res == RiJStateReactive.TAKE_EVENT_NOT_CONSUMED)
+                {
+                    res = state_24_takeEvent(id);
+                }
+            return res;
+        }
+        
+        //## statechart_method 
+        public void Regular_exit() {
+            RegularExit();
+            animInstance().notifyStateExited("ROOT.Active.state_24.Regular");
+        }
+        
+        //## statechart_method 
+        public void Regular_entDef() {
+            Regular_enter();
         }
         
         //## statechart_method 
         public void Waiting_enter() {
-            animInstance().notifyStateEntered("ROOT.Active.Playing.Waiting");
+            animInstance().notifyStateEntered("ROOT.Active.state_23.Playing.Waiting");
             Playing_subState = Waiting;
-            rootState_active = Waiting;
+            state_23_active = Waiting;
             WaitingEnter();
         }
         
         //## statechart_method 
+        public int state_23_takeEvent(short id) {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            return res;
+        }
+        
+        //## statechart_method 
         public void Active_exit() {
-            switch (Active_subState) {
-                case Paused:
-                {
-                    Paused_exit();
-                }
-                break;
-                case Playing:
-                {
-                    Playing_exit();
-                }
-                break;
-                default:
-                    break;
-            }
-            Active_subState = RiJNonState;
+            state_23_exit();
+            state_24_exit();
             ActiveExit();
             animInstance().notifyStateExited("ROOT.Active");
         }
@@ -483,7 +636,7 @@ public class Player implements RiJStateConcept, Animated {
         public void Finish_exit() {
             popNullConfig();
             FinishExit();
-            animInstance().notifyStateExited("ROOT.Active.Playing.Finish");
+            animInstance().notifyStateExited("ROOT.Active.state_23.Playing.Finish");
         }
         
         //## statechart_method 
@@ -492,19 +645,19 @@ public class Player implements RiJStateConcept, Animated {
         
         //## statechart_method 
         public void sendUpdate_enter() {
-            animInstance().notifyStateEntered("ROOT.Active.Playing.sendUpdate");
+            animInstance().notifyStateEntered("ROOT.Active.state_23.Playing.sendUpdate");
             pushNullConfig();
             Playing_subState = sendUpdate;
-            rootState_active = sendUpdate;
+            state_23_active = sendUpdate;
             sendUpdateEnter();
         }
         
         //## statechart_method 
         public void TimeUpdate_enter() {
-            animInstance().notifyStateEntered("ROOT.Active.Playing.TimeUpdate");
+            animInstance().notifyStateEntered("ROOT.Active.state_23.Playing.TimeUpdate");
             pushNullConfig();
             Playing_subState = TimeUpdate;
-            rootState_active = TimeUpdate;
+            state_23_active = TimeUpdate;
             TimeUpdateEnter();
         }
         
@@ -517,6 +670,35 @@ public class Player implements RiJStateConcept, Animated {
             animInstance().notifyTransitionEnded("9");
             res = RiJStateReactive.TAKE_EVENT_COMPLETE;
             return res;
+        }
+        
+        //## statechart_method 
+        public void RandomExit() {
+        }
+        
+        //## statechart_method 
+        public void Random_enter() {
+            animInstance().notifyStateEntered("ROOT.Active.state_24.Random");
+            state_24_subState = Random;
+            state_24_active = Random;
+            RandomEnter();
+        }
+        
+        //## statechart_method 
+        public int RegularTakeevRandom() {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            animInstance().notifyTransitionStarted("10");
+            Regular_exit();
+            Random_entDef();
+            animInstance().notifyTransitionEnded("10");
+            res = RiJStateReactive.TAKE_EVENT_COMPLETE;
+            return res;
+        }
+        
+        //## statechart_method 
+        public void state_24_entDef() {
+            state_24_enter();
+            state_24EntDef();
         }
         
         //## statechart_method 
@@ -610,7 +792,7 @@ public class Player implements RiJStateConcept, Animated {
         //## statechart_method 
         public void Paused_exit() {
             PausedExit();
-            animInstance().notifyStateExited("ROOT.Active.Paused");
+            animInstance().notifyStateExited("ROOT.Active.state_23.Paused");
         }
         
         //## statechart_method 
@@ -643,17 +825,40 @@ public class Player implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
+        public void state_24Enter() {
+        }
+        
+        //## statechart_method 
         public void Finish_enter() {
-            animInstance().notifyStateEntered("ROOT.Active.Playing.Finish");
+            animInstance().notifyStateEntered("ROOT.Active.state_23.Playing.Finish");
             pushNullConfig();
             Playing_subState = Finish;
-            rootState_active = Finish;
+            state_23_active = Finish;
             FinishEnter();
         }
         
         //## statechart_method 
         public void WaitingEnter() {
-            itsRiJThread.schedTimeout(1000, Player_Timeout_Waiting_id, this, "ROOT.Active.Playing.Waiting");
+            itsRiJThread.schedTimeout(1000, Player_Timeout_Waiting_id, this, "ROOT.Active.state_23.Playing.Waiting");
+        }
+        
+        //## statechart_method 
+        public void state_23Exit() {
+        }
+        
+        //## statechart_method 
+        public void state_23Enter() {
+        }
+        
+        //## statechart_method 
+        public int RandomTakeevRandom() {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            animInstance().notifyTransitionStarted("11");
+            Random_exit();
+            Regular_entDef();
+            animInstance().notifyTransitionEnded("11");
+            res = RiJStateReactive.TAKE_EVENT_COMPLETE;
+            return res;
         }
         
         //## statechart_method 
@@ -686,6 +891,34 @@ public class Player implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
+        public void state_23_enter() {
+            animInstance().notifyStateEntered("ROOT.Active.state_23");
+            state_23Enter();
+        }
+        
+        //## statechart_method 
+        public void RandomEnter() {
+            //#[ state Active.state_24.Random.(Entry) 
+            isRandom=true;
+            //#]
+        }
+        
+        //## statechart_method 
+        public void Random_entDef() {
+            Random_enter();
+        }
+        
+        //## statechart_method 
+        public void state_24Exit() {
+        }
+        
+        //## statechart_method 
+        public void state_24_enter() {
+            animInstance().notifyStateEntered("ROOT.Active.state_24");
+            state_24Enter();
+        }
+        
+        //## statechart_method 
         public int Finish_takeEvent(short id) {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             if(event.isTypeOf(RiJEvent.NULL_EVENT_ID))
@@ -710,6 +943,27 @@ public class Player implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
+        public void state_24_exit() {
+            switch (state_24_subState) {
+                case Regular:
+                {
+                    Regular_exit();
+                }
+                break;
+                case Random:
+                {
+                    Random_exit();
+                }
+                break;
+                default:
+                    break;
+            }
+            state_24_subState = RiJNonState;
+            state_24Exit();
+            animInstance().notifyStateExited("ROOT.Active.state_24");
+        }
+        
+        //## statechart_method 
         public int Active_takeEvent(short id) {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             return res;
@@ -723,7 +977,7 @@ public class Player implements RiJStateConcept, Animated {
         //## statechart_method 
         public void Waiting_exit() {
             WaitingExit();
-            animInstance().notifyStateExited("ROOT.Active.Playing.Waiting");
+            animInstance().notifyStateExited("ROOT.Active.state_23.Playing.Waiting");
         }
         
         //## statechart_method 
@@ -736,18 +990,37 @@ public class Player implements RiJStateConcept, Animated {
             
             if(res == RiJStateReactive.TAKE_EVENT_NOT_CONSUMED)
                 {
-                    res = Active_takeEvent(id);
+                    res = state_23_takeEvent(id);
                 }
             return res;
         }
         
         //## statechart_method 
+        public void state_23_exit() {
+            switch (state_23_subState) {
+                case Playing:
+                {
+                    Playing_exit();
+                }
+                break;
+                case Paused:
+                {
+                    Paused_exit();
+                }
+                break;
+                default:
+                    break;
+            }
+            state_23_subState = RiJNonState;
+            state_23Exit();
+            animInstance().notifyStateExited("ROOT.Active.state_23");
+        }
+        
+        //## statechart_method 
         public void Active_entDef() {
             Active_enter();
-            
-            animInstance().notifyTransitionStarted("0");
-            Paused_entDef();
-            animInstance().notifyTransitionEnded("0");
+            state_23_entDef();
+            state_24_entDef();
         }
         
         //## statechart_method 
@@ -759,9 +1032,9 @@ public class Player implements RiJStateConcept, Animated {
         
         //## statechart_method 
         public void Paused_enter() {
-            animInstance().notifyStateEntered("ROOT.Active.Paused");
-            Active_subState = Paused;
-            rootState_active = Paused;
+            animInstance().notifyStateEntered("ROOT.Active.state_23.Paused");
+            state_23_subState = Paused;
+            state_23_active = Paused;
             PausedEnter();
         }
         
@@ -772,7 +1045,7 @@ public class Player implements RiJStateConcept, Animated {
         
         //## statechart_method 
         public void TimeUpdateEnter() {
-            //#[ state Active.Playing.TimeUpdate.(Entry) 
+            //#[ state Active.state_23.Playing.TimeUpdate.(Entry) 
             seconds++;
             if(seconds >= 60) {
             	seconds = 0;
@@ -814,13 +1087,35 @@ public class Player implements RiJStateConcept, Animated {
             }
             Playing_subState = RiJNonState;
             PlayingExit();
-            animInstance().notifyStateExited("ROOT.Active.Playing");
+            animInstance().notifyStateExited("ROOT.Active.state_23.Playing");
+        }
+        
+        //## statechart_method 
+        public void state_23EntDef() {
+            animInstance().notifyTransitionStarted("0");
+            Paused_entDef();
+            animInstance().notifyTransitionEnded("0");
+        }
+        
+        //## statechart_method 
+        public void Random_exit() {
+            RandomExit();
+            animInstance().notifyStateExited("ROOT.Active.state_24.Random");
+        }
+        
+        //## statechart_method 
+        public void Regular_enter() {
+            animInstance().notifyStateEntered("ROOT.Active.state_24.Regular");
+            state_24_subState = Regular;
+            state_24_active = Regular;
+            RegularEnter();
         }
         
         //## statechart_method 
         public void Active_enter() {
             animInstance().notifyStateEntered("ROOT.Active");
             rootState_subState = Active;
+            rootState_active = Active;
             ActiveEnter();
         }
         
@@ -830,6 +1125,19 @@ public class Player implements RiJStateConcept, Animated {
         
         //## statechart_method 
         public void PlayingExit() {
+        }
+        
+        //## statechart_method 
+        public int state_24_takeEvent(short id) {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            return res;
+        }
+        
+        //## statechart_method 
+        public void state_24EntDef() {
+            animInstance().notifyTransitionStarted("12");
+            Regular_entDef();
+            animInstance().notifyTransitionEnded("12");
         }
         
         //## statechart_method 
@@ -850,7 +1158,7 @@ public class Player implements RiJStateConcept, Animated {
         
         //## statechart_method 
         public void sendUpdateEnter() {
-            //#[ state Active.Playing.sendUpdate.(Entry) 
+            //#[ state Active.state_23.Playing.sendUpdate.(Entry) 
             gen(new Default.evUpdateSongTime(minutes,seconds));
             //#]
         }
@@ -867,6 +1175,13 @@ public class Player implements RiJStateConcept, Animated {
             animInstance().notifyTransitionStarted("5");
             Waiting_entDef();
             animInstance().notifyTransitionEnded("5");
+        }
+        
+        //## statechart_method 
+        public void RegularEnter() {
+            //#[ state Active.state_24.Regular.(Entry) 
+            isRandom=false;
+            //#]
         }
         
         //## statechart_method 
@@ -893,7 +1208,13 @@ public class Player implements RiJStateConcept, Animated {
         public void TimeUpdate_exit() {
             popNullConfig();
             TimeUpdateExit();
-            animInstance().notifyStateExited("ROOT.Active.Playing.TimeUpdate");
+            animInstance().notifyStateExited("ROOT.Active.state_23.Playing.TimeUpdate");
+        }
+        
+        //## statechart_method 
+        public void state_23_entDef() {
+            state_23_enter();
+            state_23EntDef();
         }
         
         //## statechart_method 
@@ -909,9 +1230,28 @@ public class Player implements RiJStateConcept, Animated {
         
         //## statechart_method 
         public void Playing_enter() {
-            animInstance().notifyStateEntered("ROOT.Active.Playing");
-            Active_subState = Playing;
+            animInstance().notifyStateEntered("ROOT.Active.state_23.Playing");
+            state_23_subState = Playing;
             PlayingEnter();
+        }
+        
+        //## statechart_method 
+        public int Regular_takeEvent(short id) {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            if(event.isTypeOf(evRandom.evRandom_Default_id))
+                {
+                    res = RegularTakeevRandom();
+                }
+            
+            if(res == RiJStateReactive.TAKE_EVENT_NOT_CONSUMED)
+                {
+                    res = state_24_takeEvent(id);
+                }
+            return res;
+        }
+        
+        //## statechart_method 
+        public void RegularExit() {
         }
         
         //## statechart_method 
@@ -975,6 +1315,7 @@ public class Player implements RiJStateConcept, Animated {
         
         msg.add("seconds", seconds);
         msg.add("minutes", minutes);
+        msg.add("isRandom", isRandom);
     }
     /**  see com.ibm.rational.rhapsody.animation.Animated interface */
     public void addRelations(AnimRelations msg) {
