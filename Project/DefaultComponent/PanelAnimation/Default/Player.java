@@ -442,14 +442,14 @@ public class Player implements RiJStateConcept, Animated {
         public void state_23_add(AnimStates animStates) {
             animStates.add("ROOT.Active.state_23");
             switch (state_23_subState) {
-                case Playing:
-                {
-                    Playing_add(animStates);
-                }
-                break;
                 case Paused:
                 {
                     Paused_add(animStates);
+                }
+                break;
+                case Playing:
+                {
+                    Playing_add(animStates);
                 }
                 break;
                 default:
@@ -461,6 +461,11 @@ public class Player implements RiJStateConcept, Animated {
         public int state_23_dispatchEvent(short id) {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             switch (state_23_active) {
+                case Paused:
+                {
+                    res = Paused_takeEvent(id);
+                }
+                break;
                 case Waiting:
                 {
                     res = Waiting_takeEvent(id);
@@ -479,11 +484,6 @@ public class Player implements RiJStateConcept, Animated {
                 case sendUpdate:
                 {
                     res = sendUpdate_takeEvent(id);
-                }
-                break;
-                case Paused:
-                {
-                    res = Paused_takeEvent(id);
                 }
                 break;
                 default:
@@ -998,14 +998,14 @@ public class Player implements RiJStateConcept, Animated {
         //## statechart_method 
         public void state_23_exit() {
             switch (state_23_subState) {
-                case Playing:
-                {
-                    Playing_exit();
-                }
-                break;
                 case Paused:
                 {
                     Paused_exit();
+                }
+                break;
+                case Playing:
+                {
+                    Playing_exit();
                 }
                 break;
                 default:

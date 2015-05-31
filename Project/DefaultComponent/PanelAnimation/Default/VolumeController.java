@@ -505,7 +505,8 @@ public class VolumeController implements RiJStateConcept, Animated {
         //## statechart_method 
         public void VolumeUpEnter() {
             //#[ state VolumeUp.(Entry) 
-            volumeUp();
+            volumeUp();  
+            if (isMuted) isMuted=false;
             //#]
         }
         

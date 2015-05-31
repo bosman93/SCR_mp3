@@ -3,7 +3,7 @@ I-Logix-RPY-Archive version 8.10.0 Java 6930133
 	- _id = GUID 84e07064-e104-4b22-ad74-cc3e7975d81f;
 	- _myState = 8192;
 	- _name = "Default";
-	- _modifiedTimeWeak = 5.31.2015::0:30:43;
+	- _modifiedTimeWeak = 5.31.2015::12:29:38;
 	- _lastID = 13;
 	- Declaratives = { IRPYRawContainer 
 		- size = 4;
@@ -2553,7 +2553,7 @@ neWidth;2;ScaleThinLineWidth;1;ShadedAreaRelativeSize;0;SmallScaleFont;Arial;;8,
 			}
 		}
 	}
-	- weakCGTime = 5.31.2015::0:30:43;
+	- weakCGTime = 5.31.2015::12:29:38;
 	- strongCGTime = 5.30.2015::21:22:2;
 	- AssociationElements = { IRPYRawContainer 
 		- size = 2;
@@ -2612,8 +2612,8 @@ neWidth;2;ScaleThinLineWidth;1;ShadedAreaRelativeSize;0;SmallScaleFont;Arial;;8,
 			- _id = GUID 5fc795ec-221f-46e2-b55c-af73d2a35f61;
 			- _myState = 40960;
 			- _name = "TopLevel";
-			- _modifiedTimeWeak = 5.31.2015::0:24:21;
-			- weakCGTime = 5.31.2015::0:24:21;
+			- _modifiedTimeWeak = 5.31.2015::12:29:38;
+			- weakCGTime = 5.31.2015::12:29:38;
 			- strongCGTime = 5.30.2015::21:22:2;
 			- _multiplicity = "";
 			- _itsStateChart = { IHandle 
@@ -2651,7 +2651,7 @@ neWidth;2;ScaleThinLineWidth;1;ShadedAreaRelativeSize;0;SmallScaleFont;Arial;;8,
 				}
 			}
 			- _name = "Player";
-			- _modifiedTimeWeak = 5.31.2015::0:28:54;
+			- _modifiedTimeWeak = 5.31.2015::12:29:39;
 			- _theMainDiagram = { IHandle 
 				- _m2Class = "IDiagram";
 				- _filename = "";
@@ -2661,7 +2661,7 @@ neWidth;2;ScaleThinLineWidth;1;ShadedAreaRelativeSize;0;SmallScaleFont;Arial;;8,
 				- _id = GUID 18eef19e-2b1b-4b3d-808c-1ba9c080111c;
 			}
 			- _lastID = 6;
-			- weakCGTime = 5.31.2015::0:28:54;
+			- weakCGTime = 5.31.2015::12:29:39;
 			- strongCGTime = 5.30.2015::21:22:3;
 			- Operations = { IRPYRawContainer 
 				- size = 3;
@@ -5459,7 +5459,7 @@ if(seconds >= 60) {
 			- _id = GUID 2f92def0-53c0-4650-9cbd-cf55218301a8;
 			- _myState = 8192;
 			- _name = "VolumeController";
-			- _modifiedTimeWeak = 5.31.2015::0:24:21;
+			- _modifiedTimeWeak = 5.31.2015::12:31:12;
 			- _theMainDiagram = { IHandle 
 				- _m2Class = "IDiagram";
 				- _filename = "";
@@ -5469,7 +5469,7 @@ if(seconds >= 60) {
 				- _id = GUID 18eef19e-2b1b-4b3d-808c-1ba9c080111c;
 			}
 			- _lastID = 9;
-			- weakCGTime = 5.31.2015::0:24:21;
+			- weakCGTime = 5.31.2015::12:31:12;
 			- strongCGTime = 5.30.2015::21:22:2;
 			- Operations = { IRPYRawContainer 
 				- size = 7;
@@ -5744,9 +5744,9 @@ if(seconds >= 60) {
 					- _id = GUID 26425769-6b51-40a2-b21a-ee3ed1f4b035;
 					- _myState = 10240;
 					- _name = "statechart_2";
-					- _modifiedTimeWeak = 5.30.2015::22:51:51;
+					- _modifiedTimeWeak = 5.31.2015::12:31:12;
 					- _lastID = 4;
-					- weakCGTime = 5.30.2015::22:51:51;
+					- weakCGTime = 5.31.2015::12:31:12;
 					- strongCGTime = 5.30.2015::20:40:32;
 					- _multiplicity = "";
 					- _itsStateChart = { IHandle 
@@ -5940,14 +5940,15 @@ if(seconds >= 60) {
 						{ IState 
 							- _id = GUID 4e44370b-a55c-4871-8ace-436071ad9672;
 							- _name = "VolumeUp";
-							- _modifiedTimeWeak = 5.30.2015::20:45:48;
+							- _modifiedTimeWeak = 5.31.2015::12:31:12;
 							- _parent = GUID 8265fb64-72dc-4afb-b811-71c205dd885f;
 							- _defaultTrans = ;
 							- _entryAction = { IAction 
 								- _id = GUID 99a0914b-9034-426c-9461-261d7bdc1662;
 								- _myState = 4096;
-								- _modifiedTimeWeak = 5.30.2015::20:43:1;
-								- _body = "volumeUp();";
+								- _modifiedTimeWeak = 5.31.2015::12:31:12;
+								- _body = "volumeUp();  
+if (isMuted) isMuted=false;";
 							}
 						}
 						{ IState 
@@ -6006,7 +6007,7 @@ if(seconds >= 60) {
 							}
 						}
 					}
-					- _version = 5.31.2015::0:51:51;
+					- _version = 5.31.2015::14:31:12;
 					- _baseVersion = 1.2.1990::0:0:0;
 					- _diagram = GUID 525a6ec0-206f-41fb-b976-63783caa80dc;
 					- Views = { IRPYRawContainer 
@@ -6189,8 +6190,8 @@ if(seconds >= 60) {
 								}
 							}
 							- _name = "statechartdiagram_0";
-							- _modifiedTimeWeak = 5.30.2015::22:51:51;
-							- _lastModifiedTime = "5.30.2015::22:51:51";
+							- _modifiedTimeWeak = 5.31.2015::12:31:12;
+							- _lastModifiedTime = "5.31.2015::12:31:12";
 							- _graphicChart = { CGIStateChart 
 								- _id = GUID 3e12e24b-96f5-4978-90ab-98ccc41c1661;
 								- m_type = 0;
@@ -7424,7 +7425,7 @@ if(seconds >= 60) {
 			- _id = GUID 49be2696-57e6-408d-bacf-37dff6e7394e;
 			- _myState = 8192;
 			- _name = "SongNavigationController";
-			- _modifiedTimeWeak = 5.31.2015::0:30:43;
+			- _modifiedTimeWeak = 5.31.2015::12:29:39;
 			- _theMainDiagram = { IHandle 
 				- _m2Class = "IDiagram";
 				- _filename = "";
@@ -7434,7 +7435,7 @@ if(seconds >= 60) {
 				- _id = GUID 18eef19e-2b1b-4b3d-808c-1ba9c080111c;
 			}
 			- _lastID = 6;
-			- weakCGTime = 5.31.2015::0:30:43;
+			- weakCGTime = 5.31.2015::12:29:39;
 			- strongCGTime = 5.30.2015::21:24:46;
 			- Operations = { IRPYRawContainer 
 				- size = 6;
