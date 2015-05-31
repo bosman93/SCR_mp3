@@ -38,7 +38,7 @@ public class VolumeController implements RiJStateConcept, Animated {
     
     public Reactive reactive;		//## ignore 
     
-    protected int VOL_MAX = 100;		//## attribute VOL_MAX 
+    protected final int VOL_MAX = 100;		//## attribute VOL_MAX 
     
     protected boolean isMuted = false;		//## attribute isMuted 
     
@@ -54,13 +54,13 @@ public class VolumeController implements RiJStateConcept, Animated {
     public static final int VolumeUp=2;
     public static final int VolumeMute=3;
     public static final int VolumeDn=4;
-    public static final int Done=5;
+    public static final int sendNewVolume=5;
     //#]
     protected int rootState_subState;		//## ignore 
     
     protected int rootState_active;		//## ignore 
     
-    public static final int VolumeController_Timeout_Done_id = 1;		//## ignore 
+    public static final int VolumeController_Timeout_sendNewVolume_id = 1;		//## ignore 
     
     
     //## statechart_method 
@@ -189,13 +189,8 @@ public class VolumeController implements RiJStateConcept, Animated {
     }
     
     //## auto_generated 
-    public int getVOL_MAX() {
+    protected final int getVOL_MAX() {
         return VOL_MAX;
-    }
-    
-    //## auto_generated 
-    public void setVOL_MAX(int p_VOL_MAX) {
-        VOL_MAX = p_VOL_MAX;
     }
     
     //## auto_generated 
@@ -214,12 +209,12 @@ public class VolumeController implements RiJStateConcept, Animated {
     }
     
     //## auto_generated 
-    public int getTemp_volume() {
+    protected int getTemp_volume() {
         return temp_volume;
     }
     
     //## auto_generated 
-    public void setTemp_volume(int p_temp_volume) {
+    protected void setTemp_volume(int p_temp_volume) {
         temp_volume = p_temp_volume;
     }
     
@@ -341,9 +336,9 @@ public class VolumeController implements RiJStateConcept, Animated {
                     VolumeMute_add(animStates);
                 }
                 break;
-                case Done:
+                case sendNewVolume:
                 {
-                    Done_add(animStates);
+                    sendNewVolume_add(animStates);
                 }
                 break;
                 default:
@@ -383,9 +378,9 @@ public class VolumeController implements RiJStateConcept, Animated {
                     res = VolumeMute_takeEvent(id);
                 }
                 break;
-                case Done:
+                case sendNewVolume:
                 {
-                    res = Done_takeEvent(id);
+                    res = sendNewVolume_takeEvent(id);
                 }
                 break;
                 default:
@@ -415,8 +410,8 @@ public class VolumeController implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
-        public void Done_add(AnimStates animStates) {
-            animStates.add("ROOT.Done");
+        public void sendNewVolume_add(AnimStates animStates) {
+            animStates.add("ROOT.sendNewVolume");
         }
         
         //## auto_generated 
@@ -463,7 +458,7 @@ public class VolumeController implements RiJStateConcept, Animated {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             animInstance().notifyTransitionStarted("2");
             VolumeDn_exit();
-            Done_entDef();
+            sendNewVolume_entDef();
             animInstance().notifyTransitionEnded("2");
             res = RiJStateReactive.TAKE_EVENT_COMPLETE;
             return res;
@@ -481,25 +476,11 @@ public class VolumeController implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
-        public int DoneTakeRiJTimeout() {
-            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            if(event.getTimeoutId() == VolumeController_Timeout_Done_id)
-                {
-                    animInstance().notifyTransitionStarted("4");
-                    Done_exit();
-                    VolumeWaiting_entDef();
-                    animInstance().notifyTransitionEnded("4");
-                    res = RiJStateReactive.TAKE_EVENT_COMPLETE;
-                }
-            return res;
-        }
-        
-        //## statechart_method 
-        public void Done_enter() {
-            animInstance().notifyStateEntered("ROOT.Done");
-            rootState_subState = Done;
-            rootState_active = Done;
-            DoneEnter();
+        public void sendNewVolume_enter() {
+            animInstance().notifyStateEntered("ROOT.sendNewVolume");
+            rootState_subState = sendNewVolume;
+            rootState_active = sendNewVolume;
+            sendNewVolumeEnter();
         }
         
         //## statechart_method 
@@ -509,17 +490,6 @@ public class VolumeController implements RiJStateConcept, Animated {
             rootState_subState = VolumeDn;
             rootState_active = VolumeDn;
             VolumeDnEnter();
-        }
-        
-        //## statechart_method 
-        public int Done_takeEvent(short id) {
-            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            if(event.isTypeOf(RiJEvent.TIMEOUT_EVENT_ID))
-                {
-                    res = DoneTakeRiJTimeout();
-                }
-            
-            return res;
         }
         
         //## statechart_method 
@@ -596,11 +566,11 @@ public class VolumeController implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
-        public void DoneEnter() {
-            //#[ state Done.(Entry) 
-            System.out.println("[DEBUG] Current volume: " + volume + "\n");
+        public void sendNewVolumeEnter() {
+            //#[ state sendNewVolume.(Entry) 
+            gen(new Default.evUpdateVolumeVal(getVolume()));
             //#]
-            itsRiJThread.schedTimeout(100, VolumeController_Timeout_Done_id, this, "ROOT.Done");
+            itsRiJThread.schedTimeout(100, VolumeController_Timeout_sendNewVolume_id, this, "ROOT.sendNewVolume");
         }
         
         //## statechart_method 
@@ -608,6 +578,11 @@ public class VolumeController implements RiJStateConcept, Animated {
             popNullConfig();
             VolumeUpExit();
             animInstance().notifyStateExited("ROOT.VolumeUp");
+        }
+        
+        //## statechart_method 
+        public void sendNewVolumeExit() {
+            itsRiJThread.unschedTimeout(VolumeController_Timeout_sendNewVolume_id, this);
         }
         
         //## statechart_method 
@@ -635,16 +610,41 @@ public class VolumeController implements RiJStateConcept, Animated {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             animInstance().notifyTransitionStarted("3");
             VolumeMute_exit();
-            Done_entDef();
+            sendNewVolume_entDef();
             animInstance().notifyTransitionEnded("3");
             res = RiJStateReactive.TAKE_EVENT_COMPLETE;
             return res;
         }
         
         //## statechart_method 
-        public void Done_exit() {
-            DoneExit();
-            animInstance().notifyStateExited("ROOT.Done");
+        public int sendNewVolume_takeEvent(short id) {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            if(event.isTypeOf(RiJEvent.TIMEOUT_EVENT_ID))
+                {
+                    res = sendNewVolumeTakeRiJTimeout();
+                }
+            
+            return res;
+        }
+        
+        //## statechart_method 
+        public int sendNewVolumeTakeRiJTimeout() {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            if(event.getTimeoutId() == VolumeController_Timeout_sendNewVolume_id)
+                {
+                    animInstance().notifyTransitionStarted("4");
+                    sendNewVolume_exit();
+                    VolumeWaiting_entDef();
+                    animInstance().notifyTransitionEnded("4");
+                    res = RiJStateReactive.TAKE_EVENT_COMPLETE;
+                }
+            return res;
+        }
+        
+        //## statechart_method 
+        public void sendNewVolume_exit() {
+            sendNewVolumeExit();
+            animInstance().notifyStateExited("ROOT.sendNewVolume");
         }
         
         //## statechart_method 
@@ -663,7 +663,7 @@ public class VolumeController implements RiJStateConcept, Animated {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             animInstance().notifyTransitionStarted("1");
             VolumeUp_exit();
-            Done_entDef();
+            sendNewVolume_entDef();
             animInstance().notifyTransitionEnded("1");
             res = RiJStateReactive.TAKE_EVENT_COMPLETE;
             return res;
@@ -714,13 +714,8 @@ public class VolumeController implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
-        public void Done_entDef() {
-            Done_enter();
-        }
-        
-        //## statechart_method 
-        public void DoneExit() {
-            itsRiJThread.unschedTimeout(VolumeController_Timeout_Done_id, this);
+        public void sendNewVolume_entDef() {
+            sendNewVolume_enter();
         }
         
         //## statechart_method 

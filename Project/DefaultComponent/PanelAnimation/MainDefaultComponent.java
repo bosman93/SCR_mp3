@@ -34,10 +34,13 @@ public class MainDefaultComponent {
         
             Class.forName("Default.evNextBtnPress");
             Class.forName("Default.evNextBtnReleased");
+            Class.forName("Default.evNextSong");
             Class.forName("Default.evPlayPause");
             Class.forName("Default.evPrevBtnPress");
             Class.forName("Default.evPrevBtnReleased");
+            Class.forName("Default.evPrevSong");
             Class.forName("Default.evUpdateSongTime");
+            Class.forName("Default.evUpdateVolumeVal");
             Class.forName("Default.evVolumeDn");
             Class.forName("Default.evVolumeMute");
             Class.forName("Default.evVolumeUp");

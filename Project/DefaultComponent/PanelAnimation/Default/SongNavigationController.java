@@ -44,7 +44,10 @@ public class SongNavigationController implements RiJStateConcept, Animated {
     
     protected final int rewindMinStartTime = 2000;		//## attribute rewindMinStartTime 
     
-    protected int rewindStep = 10000;		//## attribute rewindStep 
+    /**
+     * //time in seconds
+    */
+    protected int rewindStep = 10;		//## attribute rewindStep 
     
     protected Player itsPlayer;		//## link itsPlayer 
     
@@ -56,8 +59,10 @@ public class SongNavigationController implements RiJStateConcept, Animated {
     public static final int SavingTimestamp2=4;
     public static final int SavingTimestamp1=5;
     public static final int Rewinding=6;
-    public static final int Finish=7;
-    public static final int ChangingSong=8;
+    public static final int rewindAction=7;
+    public static final int prevAction=8;
+    public static final int nextAction=9;
+    public static final int Finish=10;
     //#]
     protected int rootState_subState;		//## ignore 
     
@@ -65,7 +70,9 @@ public class SongNavigationController implements RiJStateConcept, Animated {
     
     public static final int SongNavigationController_Timeout_SavingTimestamp1_id = 1;		//## ignore 
     
-    public static final int SongNavigationController_Timeout_Rewinding_id = 2;		//## ignore 
+    protected int Rewinding_subState;		//## ignore 
+    
+    public static final int SongNavigationController_Timeout_rewindAction_id = 2;		//## ignore 
     
     public static final int SongNavigationController_Timeout_Finish_id = 3;		//## ignore 
     
@@ -229,6 +236,10 @@ public class SongNavigationController implements RiJStateConcept, Animated {
         
         //## statechart_method 
         public boolean isIn(int state) {
+            if(Rewinding_subState == state)
+                {
+                    return true;
+                }
             if(rootState_subState == state)
                 {
                     return true;
@@ -270,11 +281,6 @@ public class SongNavigationController implements RiJStateConcept, Animated {
                     SavingTimestamp2_add(animStates);
                 }
                 break;
-                case ChangingSong:
-                {
-                    ChangingSong_add(animStates);
-                }
-                break;
                 case Rewinding:
                 {
                     Rewinding_add(animStates);
@@ -283,6 +289,16 @@ public class SongNavigationController implements RiJStateConcept, Animated {
                 case Finish:
                 {
                     Finish_add(animStates);
+                }
+                break;
+                case prevAction:
+                {
+                    prevAction_add(animStates);
+                }
+                break;
+                case nextAction:
+                {
+                    nextAction_add(animStates);
                 }
                 break;
                 default:
@@ -327,19 +343,24 @@ public class SongNavigationController implements RiJStateConcept, Animated {
                     res = SavingTimestamp2_takeEvent(id);
                 }
                 break;
-                case ChangingSong:
+                case rewindAction:
                 {
-                    res = ChangingSong_takeEvent(id);
-                }
-                break;
-                case Rewinding:
-                {
-                    res = Rewinding_takeEvent(id);
+                    res = rewindAction_takeEvent(id);
                 }
                 break;
                 case Finish:
                 {
                     res = Finish_takeEvent(id);
+                }
+                break;
+                case prevAction:
+                {
+                    res = prevAction_takeEvent(id);
+                }
+                break;
+                case nextAction:
+                {
+                    res = nextAction_takeEvent(id);
                 }
                 break;
                 default:
@@ -376,6 +397,25 @@ public class SongNavigationController implements RiJStateConcept, Animated {
         //## statechart_method 
         public void Rewinding_add(AnimStates animStates) {
             animStates.add("ROOT.Rewinding");
+            if(Rewinding_subState == rewindAction)
+                {
+                    rewindAction_add(animStates);
+                }
+        }
+        
+        //## statechart_method 
+        public void rewindAction_add(AnimStates animStates) {
+            animStates.add("ROOT.Rewinding.rewindAction");
+        }
+        
+        //## statechart_method 
+        public void prevAction_add(AnimStates animStates) {
+            animStates.add("ROOT.prevAction");
+        }
+        
+        //## statechart_method 
+        public void nextAction_add(AnimStates animStates) {
+            animStates.add("ROOT.nextAction");
         }
         
         //## statechart_method 
@@ -383,19 +423,11 @@ public class SongNavigationController implements RiJStateConcept, Animated {
             animStates.add("ROOT.Finish");
         }
         
-        //## statechart_method 
-        public void ChangingSong_add(AnimStates animStates) {
-            animStates.add("ROOT.ChangingSong");
-        }
-        
         //## auto_generated 
         protected void initStatechart() {
             rootState_subState = RiJNonState;
             rootState_active = RiJNonState;
-        }
-        
-        //## statechart_method 
-        public void ChangingSongEnter() {
+            Rewinding_subState = RiJNonState;
         }
         
         //## statechart_method 
@@ -403,7 +435,22 @@ public class SongNavigationController implements RiJStateConcept, Animated {
             //#[ state Finish.(Entry) 
             System.out.println("[Debug] Navigation completed\n");
             //#]
-            itsRiJThread.schedTimeout(100, SongNavigationController_Timeout_Finish_id, this, "ROOT.Finish");
+            itsRiJThread.schedTimeout(500, SongNavigationController_Timeout_Finish_id, this, "ROOT.Finish");
+        }
+        
+        //## statechart_method 
+        public int rewindAction_takeEvent(short id) {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            if(event.isTypeOf(RiJEvent.TIMEOUT_EVENT_ID))
+                {
+                    res = rewindActionTakeRiJTimeout();
+                }
+            
+            if(res == RiJStateReactive.TAKE_EVENT_NOT_CONSUMED)
+                {
+                    res = Rewinding_takeEvent(id);
+                }
+            return res;
         }
         
         //## statechart_method 
@@ -422,8 +469,21 @@ public class SongNavigationController implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
+        public void nextAction_enter() {
+            animInstance().notifyStateEntered("ROOT.nextAction");
+            pushNullConfig();
+            rootState_subState = nextAction;
+            rootState_active = nextAction;
+            nextActionEnter();
+        }
+        
+        //## statechart_method 
+        public void prevAction_entDef() {
+            prevAction_enter();
+        }
+        
+        //## statechart_method 
         public void RewindingExit() {
-            itsRiJThread.unschedTimeout(SongNavigationController_Timeout_Rewinding_id, this);
         }
         
         //## statechart_method 
@@ -456,17 +516,6 @@ public class SongNavigationController implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
-        public int ChangingSongTakeNull() {
-            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            animInstance().notifyTransitionStarted("15");
-            ChangingSong_exit();
-            Finish_entDef();
-            animInstance().notifyTransitionEnded("15");
-            res = RiJStateReactive.TAKE_EVENT_COMPLETE;
-            return res;
-        }
-        
-        //## statechart_method 
         public int RewindingTakeevNextBtnReleased() {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             animInstance().notifyTransitionStarted("13");
@@ -482,7 +531,7 @@ public class SongNavigationController implements RiJStateConcept, Animated {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             animInstance().notifyTransitionStarted("6");
             SavingTimestamp1_exit();
-            ChangingSong_entDef();
+            prevAction_entDef();
             animInstance().notifyTransitionEnded("6");
             res = RiJStateReactive.TAKE_EVENT_COMPLETE;
             return res;
@@ -517,13 +566,6 @@ public class SongNavigationController implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
-        public void ChangingSong_exit() {
-            popNullConfig();
-            ChangingSongExit();
-            animInstance().notifyStateExited("ROOT.ChangingSong");
-        }
-        
-        //## statechart_method 
         public void Finish_exit() {
             FinishExit();
             animInstance().notifyStateExited("ROOT.Finish");
@@ -531,7 +573,6 @@ public class SongNavigationController implements RiJStateConcept, Animated {
         
         //## statechart_method 
         public void RewindingEnter() {
-            itsRiJThread.schedTimeout(rewindInterval, SongNavigationController_Timeout_Rewinding_id, this, "ROOT.Rewinding");
         }
         
         //## statechart_method 
@@ -577,12 +618,23 @@ public class SongNavigationController implements RiJStateConcept, Animated {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             if(event.getTimeoutId() == SongNavigationController_Timeout_Finish_id)
                 {
-                    animInstance().notifyTransitionStarted("16");
+                    animInstance().notifyTransitionStarted("15");
                     Finish_exit();
                     Waiting_entDef();
-                    animInstance().notifyTransitionEnded("16");
+                    animInstance().notifyTransitionEnded("15");
                     res = RiJStateReactive.TAKE_EVENT_COMPLETE;
                 }
+            return res;
+        }
+        
+        //## statechart_method 
+        public int prevActionTakeNull() {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            animInstance().notifyTransitionStarted("18");
+            prevAction_exit();
+            Finish_entDef();
+            animInstance().notifyTransitionEnded("18");
+            res = RiJStateReactive.TAKE_EVENT_COMPLETE;
             return res;
         }
         
@@ -622,7 +674,16 @@ public class SongNavigationController implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
+        public void nextActionExit() {
+        }
+        
+        //## statechart_method 
         public void Rewinding_exit() {
+            if(Rewinding_subState == rewindAction)
+                {
+                    rewindAction_exit();
+                }
+            Rewinding_subState = RiJNonState;
             RewindingExit();
             animInstance().notifyStateExited("ROOT.Rewinding");
         }
@@ -632,7 +693,7 @@ public class SongNavigationController implements RiJStateConcept, Animated {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             animInstance().notifyTransitionStarted("7");
             SavingTimestamp1_exit();
-            ChangingSong_entDef();
+            nextAction_entDef();
             animInstance().notifyTransitionEnded("7");
             res = RiJStateReactive.TAKE_EVENT_COMPLETE;
             return res;
@@ -645,13 +706,27 @@ public class SongNavigationController implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
-        public int ChangingSong_takeEvent(short id) {
+        public int prevAction_takeEvent(short id) {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             if(event.isTypeOf(RiJEvent.NULL_EVENT_ID))
                 {
-                    res = ChangingSongTakeNull();
+                    res = prevActionTakeNull();
                 }
             
+            return res;
+        }
+        
+        //## statechart_method 
+        public int rewindActionTakeRiJTimeout() {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            if(event.getTimeoutId() == SongNavigationController_Timeout_rewindAction_id)
+                {
+                    animInstance().notifyTransitionStarted("11");
+                    rewindAction_exit();
+                    rewindAction_entDef();
+                    animInstance().notifyTransitionEnded("11");
+                    res = RiJStateReactive.TAKE_EVENT_COMPLETE;
+                }
             return res;
         }
         
@@ -692,15 +767,18 @@ public class SongNavigationController implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
+        public void prevActionEnter() {
+            //#[ state prevAction.(Entry) 
+            gen(new Default.evPrevSong());
+            //#]
+        }
+        
+        //## statechart_method 
         public int Rewinding_takeEvent(short id) {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             if(event.isTypeOf(evPrevBtnReleased.evPrevBtnReleased_Default_id))
                 {
                     res = RewindingTakeevPrevBtnReleased();
-                }
-            else if(event.isTypeOf(RiJEvent.TIMEOUT_EVENT_ID))
-                {
-                    res = RewindingTakeRiJTimeout();
                 }
             else if(event.isTypeOf(evNextBtnReleased.evNextBtnReleased_Default_id))
                 {
@@ -744,6 +822,25 @@ public class SongNavigationController implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
+        public int nextActionTakeNull() {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            animInstance().notifyTransitionStarted("17");
+            nextAction_exit();
+            Finish_entDef();
+            animInstance().notifyTransitionEnded("17");
+            res = RiJStateReactive.TAKE_EVENT_COMPLETE;
+            return res;
+        }
+        
+        //## statechart_method 
+        public void rewindActionEnter() {
+            //#[ state Rewinding.rewindAction.(Entry) 
+            gen(new Default.evUpdateVolumeVal(rewindStep * rewindDirection));
+            //#]
+            itsRiJThread.schedTimeout(rewindInterval, SongNavigationController_Timeout_rewindAction_id, this, "ROOT.Rewinding.rewindAction");
+        }
+        
+        //## statechart_method 
         public int SavingTimestamp1_takeEvent(short id) {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             if(event.isTypeOf(evPrevBtnReleased.evPrevBtnReleased_Default_id))
@@ -772,6 +869,11 @@ public class SongNavigationController implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
+        public void rewindActionExit() {
+            itsRiJThread.unschedTimeout(SongNavigationController_Timeout_rewindAction_id, this);
+        }
+        
+        //## statechart_method 
         public void SettingBackwardExit() {
         }
         
@@ -789,14 +891,36 @@ public class SongNavigationController implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
-        public void ChangingSongExit() {
+        public int nextAction_takeEvent(short id) {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            if(event.isTypeOf(RiJEvent.NULL_EVENT_ID))
+                {
+                    res = nextActionTakeNull();
+                }
+            
+            return res;
+        }
+        
+        //## statechart_method 
+        public void prevAction_exit() {
+            popNullConfig();
+            prevActionExit();
+            animInstance().notifyStateExited("ROOT.prevAction");
+        }
+        
+        //## statechart_method 
+        public void prevAction_enter() {
+            animInstance().notifyStateEntered("ROOT.prevAction");
+            pushNullConfig();
+            rootState_subState = prevAction;
+            rootState_active = prevAction;
+            prevActionEnter();
         }
         
         //## statechart_method 
         public void Rewinding_enter() {
             animInstance().notifyStateEntered("ROOT.Rewinding");
             rootState_subState = Rewinding;
-            rootState_active = Rewinding;
             RewindingEnter();
         }
         
@@ -805,7 +929,7 @@ public class SongNavigationController implements RiJStateConcept, Animated {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             animInstance().notifyTransitionStarted("8");
             SavingTimestamp2_exit();
-            ChangingSong_entDef();
+            prevAction_entDef();
             animInstance().notifyTransitionEnded("8");
             res = RiJStateReactive.TAKE_EVENT_COMPLETE;
             return res;
@@ -838,17 +962,28 @@ public class SongNavigationController implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
-        public int RewindingTakeRiJTimeout() {
-            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            if(event.getTimeoutId() == SongNavigationController_Timeout_Rewinding_id)
-                {
-                    animInstance().notifyTransitionStarted("11");
-                    Rewinding_exit();
-                    Rewinding_entDef();
-                    animInstance().notifyTransitionEnded("11");
-                    res = RiJStateReactive.TAKE_EVENT_COMPLETE;
-                }
-            return res;
+        public void nextActionEnter() {
+            //#[ state nextAction.(Entry) 
+            gen(new Default.evNextSong());
+            //#]
+        }
+        
+        //## statechart_method 
+        public void prevActionExit() {
+        }
+        
+        //## statechart_method 
+        public void rewindAction_exit() {
+            rewindActionExit();
+            animInstance().notifyStateExited("ROOT.Rewinding.rewindAction");
+        }
+        
+        //## statechart_method 
+        public void rewindAction_enter() {
+            animInstance().notifyStateEntered("ROOT.Rewinding.rewindAction");
+            Rewinding_subState = rewindAction;
+            rootState_active = rewindAction;
+            rewindActionEnter();
         }
         
         //## statechart_method 
@@ -858,6 +993,10 @@ public class SongNavigationController implements RiJStateConcept, Animated {
         //## statechart_method 
         public void Rewinding_entDef() {
             Rewinding_enter();
+            
+            animInstance().notifyTransitionStarted("16");
+            rewindAction_entDef();
+            animInstance().notifyTransitionEnded("16");
         }
         
         //## statechart_method 
@@ -871,20 +1010,6 @@ public class SongNavigationController implements RiJStateConcept, Animated {
         
         //## statechart_method 
         public void rootStateExit() {
-        }
-        
-        //## statechart_method 
-        public void ChangingSong_enter() {
-            animInstance().notifyStateEntered("ROOT.ChangingSong");
-            pushNullConfig();
-            rootState_subState = ChangingSong;
-            rootState_active = ChangingSong;
-            ChangingSongEnter();
-        }
-        
-        //## statechart_method 
-        public void ChangingSong_entDef() {
-            ChangingSong_enter();
         }
         
         //## statechart_method 
@@ -911,6 +1036,23 @@ public class SongNavigationController implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
+        public void nextAction_exit() {
+            popNullConfig();
+            nextActionExit();
+            animInstance().notifyStateExited("ROOT.nextAction");
+        }
+        
+        //## statechart_method 
+        public void nextAction_entDef() {
+            nextAction_enter();
+        }
+        
+        //## statechart_method 
+        public void rewindAction_entDef() {
+            rewindAction_enter();
+        }
+        
+        //## statechart_method 
         public int RewindingTakeevPrevBtnReleased() {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             animInstance().notifyTransitionStarted("12");
@@ -926,7 +1068,7 @@ public class SongNavigationController implements RiJStateConcept, Animated {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             animInstance().notifyTransitionStarted("9");
             SavingTimestamp2_exit();
-            ChangingSong_entDef();
+            nextAction_entDef();
             animInstance().notifyTransitionEnded("9");
             res = RiJStateReactive.TAKE_EVENT_COMPLETE;
             return res;

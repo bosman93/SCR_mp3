@@ -29,20 +29,23 @@ if "%1" == "run" goto run
 
 :clean
 echo cleaning class files
-if exist Default\evUpdateSongTime.class del Default\evUpdateSongTime.class
-if exist Default\VolumeController.class del Default\VolumeController.class
-if exist Default\evNextBtnReleased.class del Default\evNextBtnReleased.class
-if exist Default\Default_pkgClass.class del Default\Default_pkgClass.class
-if exist Default\evPrevBtnReleased.class del Default\evPrevBtnReleased.class
 if exist Default\evNextBtnPress.class del Default\evNextBtnPress.class
+if exist Default\Player.class del Default\Player.class
+if exist Default\evUpdateVolumeVal.class del Default\evUpdateVolumeVal.class
 if exist Default\evPrevBtnPress.class del Default\evPrevBtnPress.class
-if exist Default\evPlayPause.class del Default\evPlayPause.class
 if exist MainDefaultComponent.class del MainDefaultComponent.class
+if exist Default\evPlayPause.class del Default\evPlayPause.class
+if exist Default\Default_pkgClass.class del Default\Default_pkgClass.class
 if exist Default\evVolumeMute.class del Default\evVolumeMute.class
 if exist Default\evVolumeDn.class del Default\evVolumeDn.class
-if exist Default\Player.class del Default\Player.class
 if exist Default\evVolumeUp.class del Default\evVolumeUp.class
+if exist Default\evUpdateSongTime.class del Default\evUpdateSongTime.class
+if exist Default\evNextBtnReleased.class del Default\evNextBtnReleased.class
+if exist Default\evPrevSong.class del Default\evPrevSong.class
+if exist Default\evPrevBtnReleased.class del Default\evPrevBtnReleased.class
 if exist Default\SongNavigationController.class del Default\SongNavigationController.class
+if exist Default\VolumeController.class del Default\VolumeController.class
+if exist Default\evNextSong.class del Default\evNextSong.class
 
 if "%1" == "clean" goto end
 
